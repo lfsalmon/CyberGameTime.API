@@ -1,0 +1,69 @@
+﻿using CyberGameTime.Bussiness.Dtos.Screen;
+using CyberGameTime.Bussiness.Responses;
+using CyberGameTime.Entities.enums;
+using CyberGameTime.Models;
+
+using System.Xml.Serialization;
+
+namespace CyberGameTime.Bussiness.Helpers.Conectivity.Roku
+{
+    public class RokuDevice : GeneralConneciton
+    {
+        public RokuDevice(Screens _screen) : base(_screen)
+        {
+        }
+
+        public override async Task<Status> GetStatus()
+        {
+            var rokuinfo=await getInfo();
+            return rokuinfo?.Status ?? Entities.enums.Status.Undefined;
+        }
+
+        private Status ValidatStatus(string powerMode) => powerMode switch
+        {
+            "PowerOn" => Status.PowerOn,
+            _ => Status.PowerOff
+        };
+
+        public override async Task<DeviceResponseData?> getInfo()
+        {
+            RokuInfoResponse deviceInfo = null;
+            using HttpClient client = new HttpClient();
+            var response = await client.GetAsync($"http://{_Screen?.IpAddres}:8060/query/device-info");
+            if (response is not null && response.IsSuccessStatusCode)
+            {
+                var serializer = new XmlSerializer(typeof(RokuInfoResponse));
+                var responseData = await response.Content.ReadAsStringAsync();
+                using (var reader = new StringReader(responseData))
+                {
+                    deviceInfo = (RokuInfoResponse)serializer.Deserialize(reader);
+                }
+            }
+            return deviceInfo is null ? null : new DeviceResponseData()
+            {
+                Udn = deviceInfo.Udn,
+                DeviceId = deviceInfo.DeviceId,
+                ModelName = deviceInfo.ModelName,
+                ModelNumber = deviceInfo.ModelNumber,
+                SerialNumber = deviceInfo.SerialNumber,
+                SoftwareVersion = deviceInfo.SoftwareVersion,
+                Status = ValidatStatus(deviceInfo.PowerMode)
+            };
+        }
+
+        public override async Task<bool> TurnOff()
+        {
+            using HttpClient client = new HttpClient();
+            var response = await client.PostAsync($"http://{_Screen?.IpAddres}:8060/keypress/PowerOff", null);
+            return response.IsSuccessStatusCode;
+        }
+        public override async Task<bool> TurnOn()
+        {
+
+            using HttpClient client = new HttpClient();
+            var response = await client.PostAsync($"http://{_Screen?.IpAddres}:8060/keypress/PowerOn", null);
+            return response.IsSuccessStatusCode;
+        }
+
+    }
+}

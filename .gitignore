@@ -1,0 +1,49 @@
+## Visual Studio
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+
+## Build results
+bin/
+obj/
+out/
+[Bb]uild/
+[Ll]og/
+*.log
+
+## NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+
+## User-specific files
+*.user
+*.vspscc
+*.vssscc
+*.sln.docstates
+
+## DotCover
+.idea/
+*.dotCover
+
+## Rider
+.idea/
+
+## Others
+*.dbmdl
+*.pdb
+*.mdb
+*.cache
+*.config
+*.bak
+
+## Docker
+**/Dockerfile
+**/docker-compose.yml
+
+## Secrets
+*.env
+*.secrets.json
+secrets.json
