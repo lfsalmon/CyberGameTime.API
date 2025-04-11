@@ -40,7 +40,6 @@ packages/
 *.bak
 
 ## Docker
-**/Dockerfile
 **/docker-compose.yml
 
 ## Secrets
