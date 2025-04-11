@@ -42,6 +42,7 @@ public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mappe
                     {
                         await conn.TurnOff();
                         sender.SendPowerOff(_screen.Name);
+                        Console.WriteLine("Turned off");
                     }
 
                 }
