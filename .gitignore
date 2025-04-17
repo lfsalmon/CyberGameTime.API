@@ -46,3 +46,8 @@ packages/
 *.env
 *.secrets.json
 secrets.json
+
+
+.vs/
+
+*.API.sln

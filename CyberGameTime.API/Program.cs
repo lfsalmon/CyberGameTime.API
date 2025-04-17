@@ -16,21 +16,17 @@ builder.Services.AddSignalR(options =>
 });
 builder.Logging.AddConsole();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+string? connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+if(string.IsNullOrEmpty(connectionString))
+    connectionString = builder.Configuration.GetConnectionString("ConnectionString");
+
+
 Console.WriteLine("Cadena de conexi�n usada: " + connectionString);
 
 builder.Services.AddDbContext<CyberGameContext>(options =>
     options.UseSqlServer(connectionString)
 );
-
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowAll",
-//        builder => builder
-//             .AllowAnyOrigin()
-//            .AllowAnyHeader()
-//            .AllowAnyMethod());
-//});
 
 builder.Services.AddCors(options =>
 {
