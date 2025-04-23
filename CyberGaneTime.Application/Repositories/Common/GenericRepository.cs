@@ -17,8 +17,13 @@ namespace CyberGameTime.Application.Repositories.Common
         public GenericRepository(ILogger<GenericRepository<TEntity>> logger, IConfiguration configuration)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            string? connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+            if (string.IsNullOrEmpty(connectionString))
+                connectionString = configuration.GetConnectionString("ConnectionString");
+
             var _aux = new DbContextOptionsBuilder<CyberGameContext>();
-            _aux.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            _aux.UseSqlServer(connectionString);
             _context = new CyberGameContext(_aux.Options);
 
         }
