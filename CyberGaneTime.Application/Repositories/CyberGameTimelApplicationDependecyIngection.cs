@@ -20,7 +20,8 @@ public static class CyberGameTimeApplicationDependecyIngection
         if (string.IsNullOrEmpty(connectionString))
             connectionString = configuration.GetConnectionString("ConnectionString");
 
-        
+
+        Console.WriteLine("Cadena de conexi�n usada: " + connectionString);
 
         services.AddDbContext<CyberGameContext>(options =>
         options.UseSqlServer(connectionString));

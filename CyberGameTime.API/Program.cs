@@ -23,11 +23,7 @@ if(string.IsNullOrEmpty(connectionString))
 
 builder.Services.CyberGameTimelApplication(builder.Configuration);
 
-Console.WriteLine("Cadena de conexi�n usada: " + connectionString);
 
-builder.Services.AddDbContext<CyberGameContext>(options =>
-    options.UseSqlServer(connectionString)
-);
 
 builder.Services.AddCors(options =>
 {
@@ -53,7 +49,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.CyberGameTimelApplication(builder.Configuration);
+//builder.Services.CyberGameTimelApplication(builder.Configuration);
 builder.Services.CyberGameTimeBussines(builder.Configuration);
 
 
