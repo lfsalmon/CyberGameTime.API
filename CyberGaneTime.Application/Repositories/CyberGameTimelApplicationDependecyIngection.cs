@@ -11,11 +11,7 @@ public static class CyberGameTimeApplicationDependecyIngection
 {
     public static IServiceCollection CyberGameTimelApplication(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-        services.AddTransient<IRentalScreenRepository, RentalScreenRepository>();
-
-
-
+       
         string? connectionString = Environment.GetEnvironmentVariable("ConnectionString");
         if (string.IsNullOrEmpty(connectionString))
             connectionString = configuration.GetConnectionString("ConnectionString");
@@ -32,6 +28,10 @@ public static class CyberGameTimeApplicationDependecyIngection
                  connectionString,
                  sqlOptions => sqlOptions.MigrationsAssembly("CyberGameTime.Application"))
              );
+
+        services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddTransient<IRentalScreenRepository, RentalScreenRepository>();
+
         return services;
     }
 
