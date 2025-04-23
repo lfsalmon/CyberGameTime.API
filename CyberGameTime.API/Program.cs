@@ -21,6 +21,7 @@ string? connectionString = Environment.GetEnvironmentVariable("ConnectionString"
 if(string.IsNullOrEmpty(connectionString))
     connectionString = builder.Configuration.GetConnectionString("ConnectionString");
 
+builder.Services.CyberGameTimelApplication(builder.Configuration);
 
 Console.WriteLine("Cadena de conexi�n usada: " + connectionString);
 
