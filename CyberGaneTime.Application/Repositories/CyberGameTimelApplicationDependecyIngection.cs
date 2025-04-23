@@ -14,15 +14,22 @@ public static class CyberGameTimeApplicationDependecyIngection
         services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddTransient<IRentalScreenRepository, RentalScreenRepository>();
 
-        var connection = configuration.GetConnectionString("DefaultConnection");
+
+
+        string? connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+        if (string.IsNullOrEmpty(connectionString))
+            connectionString = configuration.GetConnectionString("ConnectionString");
+
+
+        Console.WriteLine("Cadena de conexi�n usada: " + connectionString);
 
         services.AddDbContext<CyberGameContext>(options =>
-        options.UseSqlServer(connection));
+        options.UseSqlServer(connectionString));
 
         services.AddDbContext<CyberGameContext>(options =>
 
              options.UseSqlServer(
-                 connection,
+                 connectionString,
                  sqlOptions => sqlOptions.MigrationsAssembly("CyberGameTime.Application"))
              );
         return services;
