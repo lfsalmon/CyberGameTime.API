@@ -22,7 +22,7 @@ public class RentalScreenRepository : GenericRepository<RentalScreens>, IRentalS
 
     public async Task<IEnumerable<RentalScreens>> GetCurrentRentalScreens()
     {
-        var _dateTime=DateTime.UtcNow;
+        var _dateTime=DateTime.Now;
         return _context.RentalScreens.Where(x => _dateTime >= x.StartDate &&  _dateTime<= x.EndDate).ToList();
     }
 }
