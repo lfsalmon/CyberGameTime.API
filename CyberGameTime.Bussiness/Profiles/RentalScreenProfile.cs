@@ -19,8 +19,8 @@ namespace CyberGameTime.Bussiness.Profiles
         {
             CreateMap<RentalScreens, AddRentalScreenRequest>();
             CreateMap<AddRentalScreenRequest,RentalScreens>()
-                .ForMember(x => x.CreateAt, opt => opt.MapFrom(x => DateTime.UtcNow))
-                .ForMember(x => x.UpdateAt, opt => opt.MapFrom(x => DateTime.UtcNow));
+                .ForMember(x => x.CreateAt, opt => opt.MapFrom(x => DateTime.Now))
+                .ForMember(x => x.UpdateAt, opt => opt.MapFrom(x => DateTime.Now));
 
             CreateMap<RentalScreens, RentalScreanDto>().ReverseMap();
         }

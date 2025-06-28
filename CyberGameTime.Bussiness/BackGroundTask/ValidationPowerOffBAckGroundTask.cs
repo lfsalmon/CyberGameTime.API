@@ -24,14 +24,18 @@ public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mappe
         using var scope = _serviceProvider.CreateScope();
         var sender = scope.ServiceProvider.GetRequiredService<ISendMessageSignalR>();
 
-
-        // cada 5 min validar esta parte 
         while (!stoppingToken.IsCancellationRequested)
         {
+            var currentDate = DateTime.Now;
             var minutsToWait= 1 * 60 * 1000;
             await Task.Delay(minutsToWait);
+
             var _allScreens = await _mediator.Send(new GetScreenListQuery());
-            var _scrernsWithoutRent = _allScreens.Where(x => x.RentalScrean is null).Select(x => _mapper.Map<Screens>(x)).ToList();
+
+            var _scrernsWithoutRent = _allScreens
+                .Where(x => x.RentalScrean is null || 
+                            (currentDate < x.RentalScrean.StartDate  || currentDate > x.RentalScrean.EndDate))
+                .Select(x => _mapper.Map<Screens>(x));
 
             foreach (var _screen in _scrernsWithoutRent)
             {
@@ -41,14 +45,14 @@ public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mappe
                     if ((await conn.GetStatus()) == Entities.enums.Status.PowerOn)
                     {
                         await conn.TurnOff();
-                        sender.SendPowerOff(_screen.Name);
+                        await sender.SendPowerOff(_screen.Name);
                         Console.WriteLine("Turned off");
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    sender.SendError(_screen.Name);
+                    await sender.SendError(_screen.Name);
                 }
 
             }

@@ -21,7 +21,6 @@ public class GetScreenListHandler(IGenericRepository<Screens> _repositoty, IMapp
 
         return _repositoty.GetAll().Select(x => {
             var _screenDto = _mapper.Map<ScreenDto>(x);
-
             _screenDto.RentalScrean = _rentalScreens.FirstOrDefault(x => x.ScreenId == _screenDto.Id);
             return _screenDto;
         });
