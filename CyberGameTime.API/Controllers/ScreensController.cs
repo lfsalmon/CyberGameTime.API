@@ -67,7 +67,13 @@ public class ScreensController : ControllerBase
     {
         //return Ok();
         var screen = await _mediator.Send(new GetScreenByIpQuery(IpAddress));
-        if (screen is null) return NotFound();
+        if (screen is null)
+        {
+            screen = new Models.Screens()
+            {
+                IpAddres = IpAddress,
+            };
+        };
         var rokurequest = ConnectivityConstructor.constructor(screen);
         return Ok(await rokurequest.getInfo());
     }

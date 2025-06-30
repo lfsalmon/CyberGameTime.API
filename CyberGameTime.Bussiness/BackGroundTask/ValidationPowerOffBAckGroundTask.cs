@@ -33,8 +33,8 @@ public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mappe
             var _allScreens = await _mediator.Send(new GetScreenListQuery());
 
             var _scrernsWithoutRent = _allScreens
-                .Where(x => x.RentalScrean is null || 
-                            (currentDate < x.RentalScrean.StartDate  || currentDate > x.RentalScrean.EndDate))
+                .Where(x => x.CurrentRentalScrean is null || 
+                            (currentDate < x.CurrentRentalScrean.StartDate  || currentDate > x.CurrentRentalScrean.EndDate))
                 .Select(x => _mapper.Map<Screens>(x));
 
             foreach (var _screen in _scrernsWithoutRent)

@@ -2,7 +2,7 @@
 using CyberGameTime.Bussiness.Responses;
 using CyberGameTime.Entities.enums;
 using CyberGameTime.Models;
-
+using Microsoft.Extensions.Logging;
 using System.Xml.Serialization;
 
 namespace CyberGameTime.Bussiness.Helpers.Conectivity.Roku
@@ -27,28 +27,36 @@ namespace CyberGameTime.Bussiness.Helpers.Conectivity.Roku
 
         public override async Task<DeviceResponseData?> getInfo()
         {
-            RokuInfoResponse deviceInfo = null;
-            using HttpClient client = new HttpClient();
-            var response = await client.GetAsync($"http://{_Screen?.IpAddres}:8060/query/device-info");
-            if (response is not null && response.IsSuccessStatusCode)
+            try
             {
-                var serializer = new XmlSerializer(typeof(RokuInfoResponse));
-                var responseData = await response.Content.ReadAsStringAsync();
-                using (var reader = new StringReader(responseData))
+                RokuInfoResponse deviceInfo = null;
+                using HttpClient client = new HttpClient();
+                var response = await client.GetAsync($"http://{_Screen?.IpAddres}:8060/query/device-info");
+                if (response is not null && response.IsSuccessStatusCode)
                 {
-                    deviceInfo = (RokuInfoResponse)serializer.Deserialize(reader);
+                    var serializer = new XmlSerializer(typeof(RokuInfoResponse));
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    using (var reader = new StringReader(responseData))
+                    {
+                        deviceInfo = (RokuInfoResponse)serializer.Deserialize(reader);
+                    }
                 }
+                return deviceInfo is null ? new DeviceResponseData() : new DeviceResponseData()
+                {
+                    Udn = deviceInfo.Udn,
+                    DeviceId = deviceInfo.DeviceId,
+                    ModelName = deviceInfo.ModelName,
+                    ModelNumber = deviceInfo.ModelNumber,
+                    SerialNumber = deviceInfo.SerialNumber,
+                    SoftwareVersion = deviceInfo.SoftwareVersion,
+                    Status = ValidatStatus(deviceInfo.PowerMode)
+                };
             }
-            return deviceInfo is null ? null : new DeviceResponseData()
+            catch(HttpRequestException   ex)
             {
-                Udn = deviceInfo.Udn,
-                DeviceId = deviceInfo.DeviceId,
-                ModelName = deviceInfo.ModelName,
-                ModelNumber = deviceInfo.ModelNumber,
-                SerialNumber = deviceInfo.SerialNumber,
-                SoftwareVersion = deviceInfo.SoftwareVersion,
-                Status = ValidatStatus(deviceInfo.PowerMode)
-            };
+                return new DeviceResponseData();
+            }
+          
         }
 
         public override async Task<bool> TurnOff()

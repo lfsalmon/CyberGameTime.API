@@ -15,5 +15,6 @@ namespace CyberGameTime.Bussiness.Commands.Screen
         public string Name { get; set; }
         public string IpAddres { get; set; }
         public ConsoleType ConsoleType { get; set; }
+        public ConnectionType ConnectionType { get; set; }
     }
 }

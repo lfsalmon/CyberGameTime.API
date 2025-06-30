@@ -21,6 +21,8 @@ public class UpdateScreenHandler(IGenericRepository<Screens> _repositoty, IMappe
 
         _entity.Name= _request.Name;
         _entity.ConsoleType= _request.ConsoleType;
+        _entity.IpAddres = _request.IpAddres;
+        _entity.ConnectionType = _request.ConnectionType;
 
         var _entity_save = await _repositoty.Update(_entity);
         return _mapper.Map<ScreenDto>(_entity_save);
