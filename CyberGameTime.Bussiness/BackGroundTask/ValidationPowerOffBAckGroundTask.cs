@@ -26,15 +26,15 @@ public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mappe
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            var currentDate = DateTime.Now;
+            var currentDate = DateTime.UtcNow;
             var minutsToWait= 1 * 30 * 1000;
             await Task.Delay(minutsToWait);
 
             var _allScreens = await _mediator.Send(new GetScreenListQuery());
 
             var _scrernsWithoutRent = _allScreens
-                .Where(x => x.CurrentRentalScrean is null || 
-                            (currentDate < x.CurrentRentalScrean.StartDate  || currentDate > x.CurrentRentalScrean.EndDate))
+                .Where(x => x.RentalScrean is null || 
+                            (currentDate < x.RentalScrean.StartDate  || currentDate > x.RentalScrean.EndDate))
                 .Select(x => _mapper.Map<Screens>(x));
 
             foreach (var _screen in _scrernsWithoutRent)

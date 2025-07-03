@@ -15,7 +15,7 @@ namespace CyberGameTime.Bussiness.Dtos.Screen
         public ScreenStatus CurrentStatus { get; set; }
         public ConsoleType ConsoleType { get; set; }
         public ConnectionType ConnectionType { get; set; }
-        public virtual RentalScreanDto? CurrentRentalScrean { get; set; }
+        public virtual RentalScreanDto? RentalScrean { get; set; }
 
 
     }

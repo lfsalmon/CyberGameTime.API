@@ -26,8 +26,8 @@ public class UpdateRenalScreenHandler(IGenericRepository<RentalScreens> _reposit
                 return null;
             }
             
-            _entity.UpdateAt=DateTime.Now;
-            _entity.EndDate= DateTime.Now;
+            _entity.UpdateAt=DateTime.UtcNow;
+            _entity.EndDate= DateTime.UtcNow;
 
             var _entitydata=await _repositoty.Update(_entity);
             return _mapper.Map<RentalScreanDto>(_entitydata);
