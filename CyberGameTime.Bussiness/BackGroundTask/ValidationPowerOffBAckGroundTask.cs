@@ -26,8 +26,8 @@ public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mappe
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            var currentDate = DateTime.Now;
-            var minutsToWait= 1 * 60 * 1000;
+            var currentDate = DateTime.UtcNow;
+            var minutsToWait= 1 * 30 * 1000;
             await Task.Delay(minutsToWait);
 
             var _allScreens = await _mediator.Send(new GetScreenListQuery());

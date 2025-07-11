@@ -12,8 +12,8 @@ namespace CyberGameTime.Bussiness.Profiles
         {
             CreateMap<Screens, ScreenDto>().ReverseMap();
             CreateMap<ConectivityScreenQuery, Screens>().ReverseMap();
-            CreateMap<AddScreanQuery, Screens>().ForMember(x => x.CreateAt, opt => opt.MapFrom(x => DateTime.Now)).ReverseMap();
-            CreateMap<UpdateScreenRequest, Screens>().ForMember(x => x.UpdateAt, opt => opt.MapFrom(x => DateTime.Now)).ReverseMap();
+            CreateMap<AddScreanQuery, Screens>().ForMember(x => x.CreateAt, opt => opt.MapFrom(x => DateTime.UtcNow)).ReverseMap();
+            CreateMap<UpdateScreenRequest, Screens>().ForMember(x => x.UpdateAt, opt => opt.MapFrom(x => DateTime.UtcNow)).ReverseMap();
         }
     }
 }
