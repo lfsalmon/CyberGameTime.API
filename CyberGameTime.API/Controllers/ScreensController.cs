@@ -62,7 +62,7 @@ public class ScreensController : ControllerBase
     {
     }
 
-    [HttpGet("RokuInfo/{IpAddress}")]
+    [HttpGet("RokuInfo/{id}")]
     public async Task<ActionResult<DeviceResponseData>> GetRokuInfo(string IpAddress)
     {
         //return Ok();
@@ -78,20 +78,20 @@ public class ScreensController : ControllerBase
         return Ok(await rokurequest.getInfo());
     }
 
-    [HttpGet("Roku/PowerOff/{IpAddress}")]
-    public async Task<ActionResult<DeviceResponseData>> PowerOff(string IpAddress)
+    [HttpGet("Roku/PowerOff/{id}")]
+    public async Task<ActionResult<DeviceResponseData>> PowerOff(int id)
     {
-        var screen = await _mediator.Send(new GetScreenByIpQuery(IpAddress));
+        var screen = await _mediator.Send(new GetScreenByIdQuery(id));
         if (screen is null) return NotFound();
         var rokurequest = ConnectivityConstructor.constructor(screen);
         return Ok(await rokurequest.TurnOff());
     
     }
 
-    [HttpGet("Roku/PowerOn/{IpAddress}")]
-    public async Task<ActionResult<DeviceResponseData>> PowerOn(string IpAddress)
+    [HttpGet("Roku/PowerOn/{id}")]
+    public async Task<ActionResult<DeviceResponseData>> PowerOn(int id)
     {
-        var screen = await _mediator.Send(new GetScreenByIpQuery(IpAddress));
+        var screen = await _mediator.Send(new GetScreenByIdQuery(id));
         if (screen is null) return NotFound();
         var rokurequest = ConnectivityConstructor.constructor(screen);
         return Ok(await rokurequest.TurnOn());

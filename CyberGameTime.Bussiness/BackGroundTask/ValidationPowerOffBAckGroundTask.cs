@@ -44,7 +44,11 @@ public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mappe
                     var conn = ConnectivityConstructor.constructor(_screen);
                     if ((await conn.GetStatus()) == Entities.enums.Status.PowerOn)
                     {
-                        await conn.TurnOff();
+                        var result =await conn.TurnOff();
+
+                        // here need to check if the turn off was successful and create a log if not 
+
+
                         await sender.SendPowerOff(_screen.Name);
                         Console.WriteLine("Turned off");
                     }

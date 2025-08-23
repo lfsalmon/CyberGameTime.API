@@ -16,6 +16,8 @@ namespace CyberGameTime.Bussiness.Commands.Screen
         public string Roku_DeviceId { get; set; }
         public string Roku_SerialNumber { get; set; }
         public string Roku_udn { get; set; }
+        public string URL_IFTTT_On { get; set; }
+        public string URL_IFTTT_Off { get; set; }
         public ConsoleType ConsoleType { get; set; }
         public ConnectionType ConnectionType { get; set; }
     }

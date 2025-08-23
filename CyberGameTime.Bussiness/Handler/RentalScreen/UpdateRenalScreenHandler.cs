@@ -30,7 +30,7 @@ public class UpdateRenalScreenHandler(IGenericRepository<RentalScreens> _reposit
             _entity.EndDate= DateTime.UtcNow;
 
             var _entitydata=await _repositoty.Update(_entity);
-            return _mapper.Map<RentalScreanDto>(_entitydata);
+            return _mapper.Map<RentalScreanDto>(_entity);
             
         }
         catch (Exception e) 
