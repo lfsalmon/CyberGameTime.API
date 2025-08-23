@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CyberGameTime.Bussiness.Commands.Screen
-{
-    public record GetScreenByIpQuery(string ip):IRequest<Screens>;
-}
+namespace CyberGameTime.Bussiness.Commands.Screen;
+
+public record GetScreenByIpQuery(string ip):IRequest<Screens>;

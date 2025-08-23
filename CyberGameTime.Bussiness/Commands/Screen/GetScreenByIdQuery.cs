@@ -1,4 +1,5 @@
 ﻿using CyberGameTime.Bussiness.Dtos.Screen;
+using CyberGameTime.Models;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace CyberGameTime.Bussiness.Commands.Screen
 {
-    public record GetScreenByIdQuery(int id):IRequest<ScreenDto>;
+    public record GetScreenByIdQuery(int id):IRequest<Screens>;
 }

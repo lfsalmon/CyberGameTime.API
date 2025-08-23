@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace CyberGameTime.Bussiness.Handler.Screen;
 
-public class GetScreenByIdHandler(IGenericRepository<Screens>_repository, IMapper _mapper) : IRequestHandler<GetScreenByIdQuery, ScreenDto>
+public class GetScreenByIdHandler(IGenericRepository<Screens>_repository, IMapper _mapper) : IRequestHandler<GetScreenByIdQuery, Screens>
 {
-    public async Task<ScreenDto> Handle(GetScreenByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Screens> Handle(GetScreenByIdQuery request, CancellationToken cancellationToken)
     {
-        return _mapper.Map<ScreenDto>(_repository.FindById(request.id));
+        return _repository.FindById(request.id);
     }
 }
