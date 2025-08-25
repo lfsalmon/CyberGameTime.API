@@ -29,7 +29,7 @@ namespace CyberGameTime.Bussiness.Helpers.Conectivity.TuyaLan
             var psi = new ProcessStartInfo
             {
                 FileName = "python",
-                Arguments = $"\"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Scripts", "tuyaLan", "tuyalan.py")}\" {action} {devId} {ip} {localKey}",
+                Arguments = $"\"{Path.Combine("Scripts", "tuyaLan", "tuyalan.py")}\" {action} {devId} {ip} {localKey}",
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
