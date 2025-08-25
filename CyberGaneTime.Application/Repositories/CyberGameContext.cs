@@ -13,6 +13,7 @@ public class CyberGameContext : DbContext
     public DbSet<Screens> ScreenDevices { get; set; }
     public DbSet<RentalScreens> RentalScreens { get; set; }
     public DbSet<ScreenHistorics> ScreenHistorics { get; set; }
+    public DbSet<DeviceStatusLog> DeviceStatusLog { get; set; }
 
 
     public CyberGameContext(DbContextOptions<CyberGameContext> options)

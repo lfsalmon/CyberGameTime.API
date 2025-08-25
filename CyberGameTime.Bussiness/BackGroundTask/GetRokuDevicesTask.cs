@@ -22,9 +22,9 @@ public class GetRokuDevicesTask : BackgroundService
     private RokuScanner _findRokuService;
     private readonly IMediator _mediator;
 
-    public GetRokuDevicesTask(RokuScanner findRokuService, IMediator mediator)
+    public GetRokuDevicesTask( IMediator mediator)
     {
-        _findRokuService = findRokuService ?? throw new ArgumentNullException(nameof(findRokuService));
+        //_findRokuService = findRokuService ?? throw new ArgumentNullException(nameof(findRokuService));
         _mediator = mediator?? throw new ArgumentNullException(nameof(mediator));
     }
 

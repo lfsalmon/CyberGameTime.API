@@ -1,6 +1,6 @@
 ﻿using CyberGameTime.Bussiness.Helpers.Conectivity.IFTTT;
 using CyberGameTime.Bussiness.Helpers.Conectivity.Roku;
-
+using CyberGameTime.Bussiness.Helpers.Conectivity.TuyaLan;
 using CyberGameTime.Entities.enums;
 using CyberGameTime.Models;
 using System;
@@ -18,6 +18,7 @@ namespace CyberGameTime.Bussiness.Helpers.Conectivity
             return _screen.ConnectionType switch
             {
                 ConnectionType.Roku => new RokuDevice(_screen),
+                ConnectionType.TuyaLan=> new TuyaLanConnect(_screen),
                 ConnectionType.IFTTT=> new WebHooksIFTTT(_screen),
                 _ => new RokuDevice(_screen)
 

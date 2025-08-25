@@ -59,19 +59,22 @@ namespace CyberGameTime.Bussiness.Helpers.Conectivity.Roku
           
         }
 
-        public override async Task<bool> TurnOff()
+        public override async Task<Status> TurnOff()
         {
             using HttpClient client = new HttpClient();
             //var response = await client.PostAsync($"http://{_Screen?.IpAddres}:8060/keypress/PowerOff", null);
             var response = await client.PostAsync($"http://{_Screen?.IpAddres}:8060/keypress/Home", null);
-            return response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode) return Status.PowerOff;
+            return Status.Undefined;
+            
         }
-        public override async Task<bool> TurnOn()
+        public override async Task<Status> TurnOn()
         {
 
             using HttpClient client = new HttpClient();
             var response = await client.PostAsync($"http://{_Screen?.IpAddres}:8060/keypress/PowerOn", null);
-            return response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode) return Status.PowerOff;
+            return Status.Undefined;
         }
 
     }

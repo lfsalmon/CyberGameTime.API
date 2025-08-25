@@ -96,4 +96,12 @@ public class ScreensController : ControllerBase
         var rokurequest = ConnectivityConstructor.constructor(screen);
         return Ok(await rokurequest.TurnOn());
     }
+
+    [HttpGet("ScanDevices")]
+    public async Task<ActionResult<IEnumerable<ScreenDto>>> ScanDevices()
+    {
+        var result = await _mediator.Send(new ScanDevicesQuery());
+        return Ok(result);
+    }
+
 }
