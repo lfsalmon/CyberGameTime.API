@@ -1,4 +1,5 @@
 ﻿using CyberGameTime.Application.Repositories.Common;
+using CyberGameTime.Application.Repositories.DeviceStatusLogs;
 using CyberGameTime.Application.Repositories.RentalScreen;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,7 @@ public static class CyberGameTimeApplicationDependecyIngection
 
         services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddTransient<IRentalScreenRepository, RentalScreenRepository>();
+        services.AddTransient<IDeviceStatusLogRepository, DeviceStatusLogRepository>();
 
         return services;
     }

@@ -26,20 +26,20 @@ namespace CyberGameTime.Bussiness.Helpers.Conectivity.IFTTT
             return Status.PowerOn;
         }
 
-        public override async Task<bool> TurnOff()
+        public override async Task<Status> TurnOff()
         {
             using var httpClient = new HttpClient();
             var response = await httpClient.PostAsync(_Screen.URL_IFTTT_Off, null);
-            if (response.IsSuccessStatusCode) return true;
-            return false;
+            if (response.IsSuccessStatusCode) return Status.PowerOff;
+            return Status.Undefined;
         }
 
-        public override async Task<bool> TurnOn()
+        public override async Task<Status> TurnOn()
         {
             using var httpClient = new HttpClient();
             var response = await httpClient.PostAsync(_Screen.URL_IFTTT_On, null);
-            if (response.IsSuccessStatusCode) return true;
-            return false;
+            if (response.IsSuccessStatusCode) return Status.PowerOff;
+            return Status.Undefined;
         }
     }
 }

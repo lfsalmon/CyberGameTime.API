@@ -4,6 +4,8 @@ using CyberGameTime.Bussiness.Handler.Conectivity;
 using CyberGameTime.Bussiness.Helpers;
 using CyberGameTime.Bussiness.Helpers.Conectivity;
 using CyberGameTime.Bussiness.Hubs;
+using CyberGameTime.Bussiness.Services;
+using CyberGameTime.Entities.enums;
 using CyberGameTime.Models;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
@@ -17,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace CyberGameTime.Bussiness.BackGroundTask;
 
-public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mapper, IServiceProvider _serviceProvider) : BackgroundService
+public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mapper, IServiceProvider _serviceProvider, ILogService logService) : BackgroundService
 {
     protected async override Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -29,9 +31,8 @@ public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mappe
             var currentDate = DateTime.UtcNow;
             var minutsToWait= 1 * 30 * 1000;
             await Task.Delay(minutsToWait);
-
             var _allScreens = await _mediator.Send(new GetScreenListQuery());
-
+            
             var _scrernsWithoutRent = _allScreens
                 .Where(x => x.RentalScrean is null || 
                             (currentDate < x.RentalScrean.StartDate  || currentDate > x.RentalScrean.EndDate))
@@ -39,17 +40,18 @@ public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mappe
 
             foreach (var _screen in _scrernsWithoutRent)
             {
+                var status = Entities.enums.Status.Undefined;
+                string Message = string.Empty;
                 try
                 {
                     var conn = ConnectivityConstructor.constructor(_screen);
-                    if ((await conn.GetStatus()) == Entities.enums.Status.PowerOn)
+                    status = await conn.GetStatus();
+                    await logService.AddLog(_screen, status, Message);
+                    if ((status) == Entities.enums.Status.PowerOn)
                     {
                         var result =await conn.TurnOff();
-
-                        // here need to check if the turn off was successful and create a log if not 
-
-
                         await sender.SendPowerOff(_screen.Name);
+                        await logService.AddLog(_screen, result, Message);
                         Console.WriteLine("Turned off");
                     }
 
@@ -57,8 +59,14 @@ public class ValidationPowerOffBAckGroundTask(IMediator _mediator,IMapper _mappe
                 catch (Exception ex)
                 {
                     await sender.SendError(_screen.Name);
+                    Message =$"Exception in {nameof(ValidationPowerOffBAckGroundTask)} then the error was {Status.Undefined}" ;
+                    await logService.AddLog(_screen, Status.Undefined, Message);
                 }
-
+                finally
+                {
+                    
+                }
+                
             }
         }
 

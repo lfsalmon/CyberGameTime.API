@@ -18,8 +18,8 @@ namespace CyberGameTime.Bussiness.Helpers.Conectivity
             _Screen = _screen;
         }
 
-        public abstract Task<bool> TurnOff();
-        public abstract Task<bool> TurnOn();
+        public abstract Task<Status> TurnOff();
+        public abstract Task<Status> TurnOn();
         public abstract Task<Status> GetStatus();
         public abstract Task<DeviceResponseData?> getInfo();
         

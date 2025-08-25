@@ -1,4 +1,3 @@
-using CyberGameTime.Business;
 using CyberGameTime.Application;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +5,7 @@ using Newtonsoft.Json;
 
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using CyberGameTime.Bussiness.Hubs;
+using CyberGameTime.Bussiness;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -23,6 +23,7 @@ public class RentalScreenRepository : GenericRepository<RentalScreens>, IRentalS
     public async Task<IEnumerable<RentalScreens>> GetCurrentRentalScreens()
     {
         var _dateTime=DateTime.UtcNow;
+        using var _context = new CyberGameContext(_DbContextSettigs.Options);
         return _context.RentalScreens.Where(x => _dateTime >= x.StartDate &&  _dateTime<= x.EndDate).ToList();
     }
 }

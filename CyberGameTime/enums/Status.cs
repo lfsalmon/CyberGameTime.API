@@ -8,8 +8,10 @@ namespace CyberGameTime.Entities.enums
 {
     public enum Status
     {
+
         Undefined,
         PowerOn,
-        PowerOff
+        PowerOff,
+        Offline 
     }
 }

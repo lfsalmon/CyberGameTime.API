@@ -2,10 +2,11 @@
 using CyberGameTime.Bussiness.Helpers;
 using CyberGameTime.Bussiness.Helpers.Conectivity.Roku;
 using CyberGameTime.Bussiness.Profiles;
+using CyberGameTime.Bussiness.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
-namespace CyberGameTime.Business;
+namespace CyberGameTime.Bussiness;
 
 public static class CyberGameTimeBussinesDependencyInyection
 {
@@ -19,9 +20,10 @@ public static class CyberGameTimeBussinesDependencyInyection
         {
             _config.RegisterServicesFromAssemblies(typeof(CyberGameTimeBussinesDependencyInyection).Assembly);
         });
-        services.AddSingleton<RokuScanner>();
+        
+        services.AddSingleton<ILogService, LogService>();
         services.AddScoped<ISendMessageSignalR, SendMessageSignalR>();
-        services.AddHostedService<GetRokuDevicesTask>();
+        //services.AddHostedService<GetRokuDevicesTask>();
         services.AddHostedService<ValidationPowerOffBAckGroundTask>();
 
         return services;

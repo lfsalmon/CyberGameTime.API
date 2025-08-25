@@ -11,13 +11,19 @@
 		<PackageReference Include="MediatR" Version="12.4.1" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
+		<PackageReference Include="TuyaNet" Version="1.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Handler\Roku\" />
 	  <Folder Include="Helpers\Conectivity\Xbox\" />
 	  <Folder Include="Validators\" />
 	</ItemGroup>
-
+	<ItemGroup>
+		<None Update="./Scripts/tuyaLan/tuyalan.py">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\CyberGameTime\CyberGameTime.Entities.csproj" />
 	  <ProjectReference Include="..\CyberGaneTime.Application\CyberGameTime.Application.csproj" />
