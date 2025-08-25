@@ -12,6 +12,6 @@ RUN dotnet publish -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
-COPY Scripts ./Scripts
+COPY --from=build /src/CyberGameTime.Bussiness/Scripts ./Scripts
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "CyberGameTime.API.dll"]
