@@ -1,6 +1,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 8080
+EXPOSE 6666/udp
+EXPOSE 6667/udp
 
 
 
@@ -10,7 +12,7 @@ COPY . .
 # Restaurar dependencias
 RUN dotnet restore CyberGameTime.API.sln
 
-# Copiar todo el código
+# Copiar todo el cï¿½digo
 COPY . .
 
 # Publicar la API

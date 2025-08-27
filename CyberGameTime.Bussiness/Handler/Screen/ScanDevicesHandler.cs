@@ -32,8 +32,9 @@ namespace CyberGameTime.Bussiness.Handler.Screen
             var _tuyaApiSecret = configuration["TuyaCredentials:ClientSecret"];
             var _tuyadevice = configuration["TuyaCredentials:deviceId"];
 
-            var api = new TuyaApi(region: TuyaApi.Region.WesternAmerica, accessId: _tuyaAccessId, apiSecret: _tuyaApiSecret);
-            tuyaDevices = (await api.GetAllDevicesInfoAsync(_tuyadevice)).ToList();
+
+            //var api = new TuyaApi(region: TuyaApi.Region.WesternAmerica, accessId: _tuyaAccessId, apiSecret: _tuyaApiSecret);
+            //tuyaDevices = (await api.GetAllDevicesInfoAsync(_tuyadevice)).ToList();
             _logger.LogInformation("Api Connected success");
             var scanner = new TuyaScanner();
             scanner.OnNewDeviceInfoReceived += Scanner_OnNewDeviceInfoReceived;
@@ -41,6 +42,7 @@ namespace CyberGameTime.Bussiness.Handler.Screen
             scanner.Start();
             await Task.Delay(10000);
             scanner.Stop();
+            _logger.LogInformation("Tuya LAN Scan Stopped.");
 
             return 0;
         }

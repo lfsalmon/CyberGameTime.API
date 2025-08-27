@@ -28,7 +28,8 @@ def get_info(dev_id, ip, local_key):
 
 if __name__ == "__main__":
     if len(sys.argv) < 5:
-        print("Usage: python tinytuya_device.py <action> <dev_id> <ip> <local_key>")
+        print("Usage: 
+tinytuya_device.py <action> <dev_id> <ip> <local_key>")
         sys.exit(1)
     action = sys.argv[1]
     dev_id = sys.argv[2]

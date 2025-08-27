@@ -9,6 +9,8 @@ services:
     restart: unless-stopped
 
   cybergametime_api:
+    labels:
+      com.microsoft.visual-studio.project-name: "CyberGameTime.API"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DOTNET_USE_POLLING_FILE_WATCHER='1'
