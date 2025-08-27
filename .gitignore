@@ -50,4 +50,4 @@ secrets.json
 
 .vs/
 
-*.API.sln
+*.API.sln__pycache__/
