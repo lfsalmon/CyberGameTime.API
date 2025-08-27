@@ -16,6 +16,8 @@ WORKDIR /src
 
 # Copy solution and project files for dependency restoration
 COPY *.sln ./
+COPY *.dcproj ./
+COPY docker-compose*.yml ./
 COPY CyberGameTime.API/*.csproj ./CyberGameTime.API/
 COPY CyberGameTime.Bussiness/*.csproj ./CyberGameTime.Bussiness/
 COPY CyberGaneTime.Application/*.csproj ./CyberGaneTime.Application/
