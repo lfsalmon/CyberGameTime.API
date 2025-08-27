@@ -1,29 +1,18 @@
-# Base con .NET y Python
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 8080
 
-# Instalar Python y dependencias necesarias para tinytuya
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip python3-setuptools python3-dev build-essential curl && \
-    pip3 install --no-cache-dir tinytuya && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y python3 python3-pip && rm -rf /var/lib/apt/lists/*
+RUN pip3 install tinytuya
 
-# Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY . .
 RUN dotnet restore
 RUN dotnet publish -c Release -o /app/publish
 
-# Stage final
 FROM base AS final
 WORKDIR /app
-
-# Copiar scripts Python
 COPY --from=build /src/CyberGameTime.Bussiness/Scripts ./Scripts
-
-# Copiar aplicación .NET publicada
 COPY --from=build /app/publish .
-
 ENTRYPOINT ["dotnet", "CyberGameTime.API.dll"]
