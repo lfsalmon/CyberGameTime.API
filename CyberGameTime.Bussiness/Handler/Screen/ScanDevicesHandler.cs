@@ -33,8 +33,8 @@ namespace CyberGameTime.Bussiness.Handler.Screen
             var _tuyadevice = configuration["TuyaCredentials:deviceId"];
 
 
-            //var api = new TuyaApi(region: TuyaApi.Region.WesternAmerica, accessId: _tuyaAccessId, apiSecret: _tuyaApiSecret);
-            //tuyaDevices = (await api.GetAllDevicesInfoAsync(_tuyadevice)).ToList();
+            var api = new TuyaApi(region: TuyaApi.Region.WesternAmerica, accessId: _tuyaAccessId, apiSecret: _tuyaApiSecret);
+            tuyaDevices = (await api.GetAllDevicesInfoAsync(_tuyadevice)).ToList();
             _logger.LogInformation("Api Connected success");
             var scanner = new TuyaScanner();
             scanner.OnNewDeviceInfoReceived += Scanner_OnNewDeviceInfoReceived;
