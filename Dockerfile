@@ -2,17 +2,23 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 8080
 
-RUN apt-get update && apt-get install -y python3 python3-pip && rm -rf /var/lib/apt/lists/*
-RUN pip3 install tinytuya
+
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY . .
-RUN dotnet restore
+# Restaurar dependencias
+RUN dotnet restore CyberGameTime.API.sln
+
+# Copiar todo el código
+COPY . .
+
+# Publicar la API
+WORKDIR /src/CyberGameTime.API
 RUN dotnet publish -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
-COPY --from=build /src/CyberGameTime.Bussiness/Scripts ./Scripts
 COPY --from=build /app/publish .
+COPY --from=build /src/CyberGameTime.Bussiness/Scripts ./Scripts
 ENTRYPOINT ["dotnet", "CyberGameTime.API.dll"]

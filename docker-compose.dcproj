@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.Docker.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{8F4F6C9D-6F6E-4B7F-A2C4-6E7A5F0E9D11}</ProjectGuid>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceName>cybergametime_api</DockerServiceName>
+    <DockerComposeProjectPath>docker-compose.yml</DockerComposeProjectPath>
+    <ProjectVersion>2.1</ProjectVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="docker-compose.yml" />
+    <None Include="docker-compose.override.yml" />
+    <None Include=".env" />
+  </ItemGroup>
+</Project>

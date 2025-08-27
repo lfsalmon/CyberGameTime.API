@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+
+  cybergametime_api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER='1'
+      - DOTNET_RUNNING_IN_CONTAINER='true'
+      - DOTNET_HOSTPID='1'
+
+      - ConnectionString=Server=${Ip};Database=CyberGameTime;User Id=sa;Password=psw101425!;TrustServerCertificate=True;
+      - TuyaCredentials__ClientId=${TUYA_CLIENT_ID}
+      - TuyaCredentials__ClientSecret=${TUYA_CLIENT_SECRET}
+      - TuyaCredentials__deviceId=${TUYA_DEVICE_ID}
+      - ConnectionStrings__ConnectionString=${CONNECTION_STRING}
+    ports:
+      - "8080:8080"
+      - "5005:5005"     # puerto para debugger
+    restart: unless-stopped
+  gateway:
+    restart: unless-stopped

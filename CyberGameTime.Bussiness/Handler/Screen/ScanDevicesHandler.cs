@@ -8,6 +8,7 @@ using CyberGameTime.Entities.enums;
 using CyberGameTime.Models;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -17,7 +18,8 @@ namespace CyberGameTime.Bussiness.Handler.Screen
 {
     public class ScanDevicesHandler(
         IGenericRepository<Screens> _repository,
-        IConfiguration configuration
+        IConfiguration configuration,
+        ILogger<ScanDevicesHandler> _logger
     ) : IRequestHandler<ScanDevicesQuery, uint>
     {
 
@@ -32,8 +34,10 @@ namespace CyberGameTime.Bussiness.Handler.Screen
 
             var api = new TuyaApi(region: TuyaApi.Region.WesternAmerica, accessId: _tuyaAccessId, apiSecret: _tuyaApiSecret);
             tuyaDevices = (await api.GetAllDevicesInfoAsync(_tuyadevice)).ToList();
+            _logger.LogInformation("Api Connected success");
             var scanner = new TuyaScanner();
             scanner.OnNewDeviceInfoReceived += Scanner_OnNewDeviceInfoReceived;
+            _logger.LogInformation("Starting Tuya LAN Scan...");
             scanner.Start();
             await Task.Delay(10000);
             scanner.Stop();
@@ -44,6 +48,7 @@ namespace CyberGameTime.Bussiness.Handler.Screen
         {
             try
             {
+                _logger.LogInformation($"New Device Found: {e.GwId} - IP: {e.IP}");
                 var _crrentDevice = tuyaDevices.FirstOrDefault(x => x.Id == e.GwId);
                 if(_crrentDevice is null) return;
                 if(result.Any(x => x.Roku_DeviceId == _crrentDevice.Id)) return;
