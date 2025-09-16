@@ -66,7 +66,7 @@ using (var scope = app.Services.CreateScope())
 
         // Generar y aplicar todas las migraciones en tiempo de ejecuci�n
         await GenerateAndApplyMigrations(context);
-        await DataSeeder.SeedLastDayAsync(context);
+        //await DataSeeder.SeedLastDayAsync(context);
         Console.WriteLine("Migraciones aplicadas exitosamente.");
     }
     catch (Exception ex)
