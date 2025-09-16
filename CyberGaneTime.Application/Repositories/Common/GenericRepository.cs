@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using CyberGameTime.Entities.Common;
+using System.Linq.Expressions;
 
 namespace CyberGameTime.Application.Repositories.Common
 {
@@ -37,6 +38,29 @@ namespace CyberGameTime.Application.Repositories.Common
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error obteniendo todos los registros de {Entity}", typeof(TEntity).Name);
+                throw;
+            }
+        }
+
+        // Metodo generico para filtrar con predicado
+        public IEnumerable<TEntity> GetByPredicate(Expression<Func<TEntity, bool>> predicate, bool is_tracking = false, params string[] includePaths)
+        {
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+            try
+            {
+                using var context = CreateContext();
+                IQueryable<TEntity> query = context.Set<TEntity>();
+                if (includePaths != null && includePaths.Length > 0)
+                {
+                    foreach (var path in includePaths)
+                        query = query.Include(path);
+                }
+                query = is_tracking ? query.AsTracking() : query.AsNoTracking();
+                return query.Where(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error filtrando registros de {Entity}", typeof(TEntity).Name);
                 throw;
             }
         }

@@ -12,6 +12,7 @@ namespace CyberGameTime.Entities.enums
         Undefined,
         PowerOn,
         PowerOff,
-        Offline 
+        Offline,
+        ScreenRent
     }
 }
