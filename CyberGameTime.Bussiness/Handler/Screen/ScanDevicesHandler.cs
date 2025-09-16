@@ -62,6 +62,7 @@ namespace CyberGameTime.Bussiness.Handler.Screen
                     CurrentStatus = enums.ScreenStatus.Online,
                     IpAddres = e.IP,
                     Name = _crrentDevice?.Name ?? "Unknow",
+                    IdentificationName = _crrentDevice?.Name ?? "Unknow",
                     CreateAt = System.DateTime.UtcNow,
                     UpdateAt = System.DateTime.UtcNow,
                     Roku_udn = "LAN DEVICE TUYA",

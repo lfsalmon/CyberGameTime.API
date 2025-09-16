@@ -13,7 +13,8 @@ namespace CyberGameTime.Models
     public class Screens:IEntity
     {
         public long Id { get; set; }
-        public string Name { get; set; }    
+        public string Name { get; set; }
+        public string IdentificationName { get; set; }
         public string IpAddres { get; set; }
         public string Roku_DeviceId { get; set; }
         public string Roku_udn { get; set; }

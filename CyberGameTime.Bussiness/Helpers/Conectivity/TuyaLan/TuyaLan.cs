@@ -21,7 +21,16 @@ namespace CyberGameTime.Bussiness.Helpers.Conectivity.TuyaLan
 
         public override async Task<DeviceResponseData?> getInfo()
         {
-            throw new NotImplementedException();
+            return new DeviceResponseData
+            {
+                Udn = _Screen.Roku_udn ?? "N/A",
+                SerialNumber = _Screen.Roku_SerialNumber ,
+                DeviceId = _Screen.Roku_DeviceId ?? "N/A",
+                ModelName = "Tuya LAN Device",
+                ModelNumber = "1.0000",
+                SoftwareVersion = "V1.0",
+                Status = await GetStatus()
+            };
         }
 
         private async Task<string> CallTinyTuyaAsync(string action, string devId, string ip, string localKey)

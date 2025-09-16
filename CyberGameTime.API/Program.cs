@@ -1,11 +1,11 @@
 using CyberGameTime.Application;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using CyberGameTime.Bussiness.Hubs;
 using CyberGameTime.Bussiness;
+using CyberGameTime.Bussiness.Hubs;
+using CyberGameTime.Seeding;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,7 +66,7 @@ using (var scope = app.Services.CreateScope())
 
         // Generar y aplicar todas las migraciones en tiempo de ejecuci�n
         await GenerateAndApplyMigrations(context);
-
+        await DataSeeder.SeedLastDayAsync(context);
         Console.WriteLine("Migraciones aplicadas exitosamente.");
     }
     catch (Exception ex)

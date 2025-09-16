@@ -24,7 +24,7 @@ public static class CyberGameTimeBussinesDependencyInyection
         services.AddSingleton<ILogService, LogService>();
         services.AddScoped<ISendMessageSignalR, SendMessageSignalR>();
         //services.AddHostedService<GetRokuDevicesTask>();
-        services.AddHostedService<ValidationPowerOffBAckGroundTask>();
+        //services.AddHostedService<ValidationPowerOffBAckGroundTask>();
 
         return services;
     }

@@ -12,7 +12,7 @@ public class CyberGameContext : DbContext
     // Migrations: dotnet ef migrations add AddConsoleType --project ./CyberGaneTime.Application --startup-project .\CyberGameTime.API
     public DbSet<Screens> ScreenDevices { get; set; }
     public DbSet<RentalScreens> RentalScreens { get; set; }
-    public DbSet<ScreenHistorics> ScreenHistorics { get; set; }
+    //public DbSet<ScreenHistorics> ScreenHistorics { get; set; }
     public DbSet<DeviceStatusLog> DeviceStatusLog { get; set; }
 
 

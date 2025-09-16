@@ -2,7 +2,9 @@
 using CyberGameTime.Application.Repositories.Common;
 using CyberGameTime.Bussiness.Commands.RentalScreen;
 using CyberGameTime.Bussiness.Dtos.RentalScreen;
+using CyberGameTime.Bussiness.Helpers.Conectivity;
 using CyberGameTime.Entities.Models;
+using CyberGameTime.Models;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace CyberGameTime.Bussiness.Handler.RentalScreen;
 
-public class UpdateRenalScreenHandler(IGenericRepository<RentalScreens> _repositoty, IMapper _mapper,ILogger<UpdateRenalScreenHandler> _logger) : IRequestHandler<UpdateRentalScreenCommand, RentalScreanDto>
+public class UpdateRenalScreenHandler(IGenericRepository<RentalScreens> _repositoty, IGenericRepository<Screens> _reqpositoryScreens, IMapper _mapper,ILogger<UpdateRenalScreenHandler> _logger) : IRequestHandler<UpdateRentalScreenCommand, RentalScreanDto>
 {
     public async Task<RentalScreanDto> Handle(UpdateRentalScreenCommand _request, CancellationToken cancellationToken)
     {
@@ -30,7 +32,23 @@ public class UpdateRenalScreenHandler(IGenericRepository<RentalScreens> _reposit
             _entity.EndDate= DateTime.UtcNow;
 
             var _entitydata=await _repositoty.Update(_entity);
+
+            try
+            {
+                var _screen = _reqpositoryScreens.GetByPredicate(x => x.Id == _entity.ScreenId).FirstOrDefault();
+                var _connect = ConnectivityConstructor.constructor(_screen);
+                await _connect.TurnOn();
+
+            }
+            catch
+            {
+                // nose predio 
+
+            }
+
             return _mapper.Map<RentalScreanDto>(_entity);
+
+
             
         }
         catch (Exception e) 
